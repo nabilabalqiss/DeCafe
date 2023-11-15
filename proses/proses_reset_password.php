@@ -11,5 +11,5 @@ if(!empty($_POST['input_user_validate'])) {
     }else{
         $message = '<script>alert("Password gagal direset")</script>';
     }
-}echo $message
+}echo $message;
 ?>
