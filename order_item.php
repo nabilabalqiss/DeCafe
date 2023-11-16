@@ -134,18 +134,18 @@ $select_menu = mysqli_query($conn, "SELECT id,nama_menu FROM tb_daftar_menu");
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <div class="form-floating mb-3">
-                                            <select class="form-select" name="menu" id="">
-                                                        <option selected hidden value="">Pilih Menu</option>
-                                                        <?php
-                                                        foreach ($select_menu as $value) {
-                                                            if ($row['menu'] == $value['id']) {
-                                                                echo "<option selected value=$value[id]>$value[nama_menu]</option>";
-                                                            } else {
-                                                                echo "<option value=$value[id]>$value[nama_menu]</option>";
-                                                            }
+                                                <select class="form-select" name="menu" id="">
+                                                    <option selected hidden value="">Pilih Menu</option>
+                                                    <?php
+                                                    foreach ($select_menu as $value) {
+                                                        if ($row['menu'] == $value['id']) {
+                                                            echo "<option selected value=$value[id]>$value[nama_menu]</option>";
+                                                        } else {
+                                                            echo "<option value=$value[id]>$value[nama_menu]</option>";
                                                         }
-                                                        ?>
-                                                    </select>
+                                                    }
+                                                    ?>
+                                                </select>
                                                 <label for="menu">Menu Makanan/Minuman</label>
                                                 <div class="invalid-feedback">
                                                     Pilih Menu.
@@ -214,94 +214,94 @@ $select_menu = mysqli_query($conn, "SELECT id,nama_menu FROM tb_daftar_menu");
             }
             ?>
 
-         <!-- Modal Bayar -->
-         <div class="modal fade" id="bayar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-fullscreen-md-down">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Pembayaran</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr class="text-nowrap">
-                                                <th scope="col">Menu</th>
-                                                <th scope="col">Harga</th>
-                                                <th scope="col">Qty</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Catatan</th>
-                                                <th scope="col">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $total = 0;
-                                            foreach ($result as $row) {
-                                            ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo $row['nama_menu'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo number_format($row['harga'], 0, ',', '.') ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['jumlah'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['status'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['catatan'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo number_format($row['harganya'], 0, ',', '.') ?>
-                                                    </td>
-                                                </tr>
-                                            <?php
-                                                $total += $row['harganya'];
-                                            }
-                                            ?>
+            <!-- Modal Bayar -->
+            <div class="modal fade" id="bayar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-fullscreen-md-down">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Pembayaran</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr class="text-nowrap">
+                                            <th scope="col">Menu</th>
+                                            <th scope="col">Harga</th>
+                                            <th scope="col">Qty</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Catatan</th>
+                                            <th scope="col">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $total = 0;
+                                        foreach ($result as $row) {
+                                        ?>
                                             <tr>
-                                                <td colspan="5" class="fw-bold">
-                                                    Total Harga
+                                                <td>
+                                                    <?php echo $row['nama_menu'] ?>
                                                 </td>
-                                                <td class="fw-bold">
-                                                    <?php echo number_format($total, 0, ',', '.') ?>
+                                                <td>
+                                                    <?php echo number_format($row['harga'], 0, ',', '.') ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['jumlah'] ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['status'] ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['catatan'] ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo number_format($row['harganya'], 0, ',', '.') ?>
                                                 </td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <span class="text-danger fs-5 fw-semibold">Apakah Anda Yakin Ingin Melakukan Pembayaran?</span>
-                                <form form class="needs-validation" novalidate action="proses/proses_bayar.php" method="post">
-                                    <input type="hidden" name="kode_order" value="<?php echo $kode ?>">
-                                    <input type="hidden" name="meja" value="<?php echo $meja ?>">
-                                    <input type="hidden" name="pelanggan" value="<?php echo $pelanggan ?>">
-                                    <input type="hidden" name="total" value="<?php echo $total ?>">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-floating mb-3">
-                                                <input type="number" class="form-control" id="floatingInput" placeholder="Nominal Uang" name="uang" required>
-                                                <label for="floatingInput">Nominal Uang</label>
-                                                <div class="invalid-feedback">
-                                                    Masukkan Nominal Uang.
-                                                </div>
+                                        <?php
+                                            $total += $row['harganya'];
+                                        }
+                                        ?>
+                                        <tr>
+                                            <td colspan="5" class="fw-bold">
+                                                Total Harga
+                                            </td>
+                                            <td class="fw-bold">
+                                                <?php echo number_format($total, 0, ',', '.') ?>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <span class="text-danger fs-5 fw-semibold">Apakah Anda Yakin Ingin Melakukan Pembayaran?</span>
+                            <form form class="needs-validation" novalidate action="proses/proses_bayar.php" method="post">
+                                <input type="hidden" name="kode_order" value="<?php echo $kode ?>">
+                                <input type="hidden" name="meja" value="<?php echo $meja ?>">
+                                <input type="hidden" name="pelanggan" value="<?php echo $pelanggan ?>">
+                                <input type="hidden" name="total" value="<?php echo $total ?>">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="number" class="form-control" id="floatingInput" placeholder="Nominal Uang" name="uang" required>
+                                            <label for="floatingInput">Nominal Uang</label>
+                                            <div class="invalid-feedback">
+                                                Masukkan Nominal Uang.
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary" name="bayar_validate" value="12345">Buy</button>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" name="bayar_validate" value="12345">Buy</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <!-- Akhir modal Bayar  -->
+            </div>
+            <!-- Akhir modal Bayar  -->
 
             <div class="table-responsif">
                 <table class="table table-hover">
@@ -332,7 +332,13 @@ $select_menu = mysqli_query($conn, "SELECT id,nama_menu FROM tb_daftar_menu");
                                     <?php echo $row['jumlah'] ?>
                                 </td>
                                 <td>
-                                    <?php echo $row['status'] ?>
+                                    <?php
+                                    if ($row['status'] == 1) {
+                                        echo "<span class='badge text-bg-warning'>Masuk ke Dapur</span>";
+                                    } else if ($row['status'] == 2) {
+                                        echo "<span class='badge text-bg-primary'>Siap Saji</span>";
+                                    }
+                                    ?>
                                 </td>
                                 <td>
                                     <?php echo $row['catatan'] ?>
@@ -366,10 +372,10 @@ $select_menu = mysqli_query($conn, "SELECT id,nama_menu FROM tb_daftar_menu");
         <?php
         }
         ?>
-<div>
-                <button class="<?php echo(!empty($row['id_bayar'])) ? "btn btn-secondary disabled" : "btn btn-success" ; ?>" data-bs-toggle="modal" data-bs-target="#tambahItem"><i class="bi bi-plus-circle-fill"></i> Item</button>
-                <button class="<?php echo(!empty($row['id_bayar'])) ? "btn btn-secondary disabled" : "btn btn-primary" ; ?>" data-bs-toggle="modal" data-bs-target="#bayar"><i class="bi bi-cash-coin"></i> Bayar</button>
-            </div>
+        <div>
+            <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary disabled" : "btn btn-success"; ?>" data-bs-toggle="modal" data-bs-target="#tambahItem"><i class="bi bi-plus-circle-fill"></i> Item</button>
+            <button class="<?php echo (!empty($row['id_bayar'])) ? "btn btn-secondary disabled" : "btn btn-primary"; ?>" data-bs-toggle="modal" data-bs-target="#bayar"><i class="bi bi-cash-coin"></i> Bayar</button>
+        </div>
     </div>
 </div>
 </div>
